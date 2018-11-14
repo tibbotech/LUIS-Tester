@@ -19,7 +19,6 @@ end sub
 
 sub wln2000_init()
 	if wln.enabled = NO then
-		wln_stop()
 		wln.csmap=WLN_CS
 		io.num=WLN_CS
 		io.enabled=YES

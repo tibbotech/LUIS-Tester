@@ -1,11 +1,11 @@
 [project]
 version=1
-platform=TPP3W(G2)
+platform=EM2000W
 src_lib_ver=2_01_02
 name=CA-Wifi-Settings-Example
 output=CA-Wifi-Settings-Example.tpc
 debug=on
-defines=/dLCD_TYPE=SOLOMON_SSD1963 /dWLN_WPA=1 /dOBJECT_LCD=LCD_ENABLED /dOBJECT_FD=FD_ENABLED /dWLN_DEBUG_PRINT=1 /dOBJECT_KP=KP_ENABLED /dOBJECT_WLN=WLN_ENABLED
+defines= /dLCD_TYPE=SOLOMON_SSD1963 /dWLN_WPA=1 /dOBJECT_LCD=LCD_ENABLED /dOBJECT_FD=FD_ENABLED /dWLN_DEBUG_PRINT=1 /dOBJECT_KP=KP_ENABLED /dOBJECT_WLN=WLN_ENABLED
 transport=udp_winpcap
 [address1]
 platform=TPP2W
@@ -19,6 +19,10 @@ address=
 platform=TPP3W(G2)
 transport=udp_winpcap
 address=0.1.2.3.4.231
+[address4]
+platform=EM2000W
+transport=udp_winpcap
+address=0.36.119.82.195.72
 [file1]
 path=main.tbs
 type=basic
