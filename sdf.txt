@@ -1,0 +1,9 @@
+I=$WLN;D=Wi-Fi;T=GROUP
+I=WE@1;D=Wi-Fi mode;T=INT;C=STATIC;O=0- Disabled/0/1- Enabled/1;F=R
+I=WD@1;D=DHCP;T=INT;C=STATIC;O=0- Disabled/0/1- Enabled/1;F=R;S=WE@1!=0?"e":"i"
+I=WI@1;D=IP-address;T=STRING;C=IPCTRL;S=WD@1==0&&WE@1==1?"e":"i";F=R*
+I=WG@1;D=Gateway IP;T=STRING;C=IPCTRL;S=WD@1==0&&WE@1==1?"e":"i";
+I=WN@1;D=Subnet mask;T=STRING;C=IPCTRL;S=WD@1==0&&WE@1==1?"e":"i";
+I=APN@1;D=Access point (SSID);T=STRING;C=EDIT;MAXLEN=15;F=R*;S=WE@1!=0?"e":"i"
+I=SEC@1;D=AP security mode;T=INT;C=STATIC;S=WE@1!=0?"e":"i";O=0- Disabled/0/1- WEP64/1/2- WEP128/2/3- WPA-PSK (TKIP)/3/4- WPA2-PSK (AES)/4
+I=PWD@1;D=AP password;T=STRING;C=EDIT;MAXLEN=26;F=R*;S=WE@1!=0?"e":"i"

@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="./web/bootstrap.min.css" />
+
+    <style>
+        body {
+            background-color: #f8f9fa !important;
+        }
+    </style>
+    <title>Settings Configurator</title>
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <h1>Device Name</h1>
+            </div>
+        </div>
+        <div id="settings-container">
+        </div>
+    </div>
+    <br/>
+    <script src="./web/jquery-3.3.1.slim.min.js"></script>
+    <script src="./web/popper.min.js"></script>
+    <script src="./web/bootstrap.min.js"></script>
+    <script src="./web/jquery.mask.min.js"></script>
+    <script src="./web/settings.js"></script>
+    <script>
+        var sdf = `
+        ####
+        `;
+        var settings = new Settings(sdf, $('#settings-container'));
+        settings.init();
+    </script>
+</body>
+</html>

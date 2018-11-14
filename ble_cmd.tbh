@@ -1,0 +1,20 @@
+'=============================================================
+'		BLE_ST.TBH
+'=============================================================
+
+#ifndef SDF_FILE
+#define SDF_FILE "sdf.txt"
+#endif
+
+
+
+const CMD_ESC_CHAR = "@"
+const PAT_BLINK_BOTH_IN_TURNS_FAST=	"GRGRGRGR**"
+const PAT_GREEN_LOOP=			"G~"
+
+#define STX 2
+#define CR 13
+#define MAX_BT_CMD_LEN 30
+#define MAX_BT_RPL_LEN 30
+
+declare sub ble_cmd_recv_data()

@@ -1,0 +1,14 @@
+>>APN	E	S	1	0	32	A	^	Wi-Fi SSID
+>>WD	E	B	1	0	1	I	0	Wi-Fi DHCP
+>>WI	E	D	1	4	4	I	192.168.1.41	Wi-Fi IP
+>>WG	E	D	1	4	4	I	192.168.1.1	Wi-Fi Gateway IP
+>>WN	E	D	1	4	4	I	255.255.255.0	Wi-Fi Netmask
+>>PMK	E	S	1	32	32	A	12345678901234567890123456789012	Pre-shared master key
+>>PWD	E	S	1	0	26	A	^	Wifi Password
+>>WE	E	B	1	0	1	A	0	Wifi Enabled
+>>SEC	E	B	1	0	4	A	0	Security Mode
+#define STG_DESCRIPTOR_FILE "settings.xtxt"
+#define STG_MAX_NUM_SETTINGS 9
+#define STG_RAM_ARRAY_SIZE 0
+#define STG_MAX_SETTING_NAME_LEN 3
+#define STG_MAX_SETTING_VALUE_LEN 32

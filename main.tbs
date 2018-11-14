@@ -1,0 +1,40 @@
+include "global.tbh"
+
+'====================================================================
+dim tcp_sock as byte
+
+sub on_sys_init()
+	'DEAL WITH SETTINGS ---------------------------------------------
+	settings_init()	
+	
+	'connect to wifi using configuration from settings.xtxt ---------
+	dim wifiEnabled as byte= stg_get("WE", 0)
+	if wifiEnabled then
+		wifi_connect()
+	end if
+	
+	'Set up Bluetooth -----------------------------------------------
+	bluetooth_init()
+	sys.debugprint("connect to device named " + BT_NAME + " from the Tibbo BLE mobile app\r\n")
+end sub
+
+sub on_bt_event(bt_event as enum pl_bt_events)
+	select case bt_event 
+	
+	case PL_BT_EVENT_CONNECTED:
+		pat.play("G*",PL_PAT_CANINT)
+	case PL_BT_EVENT_DISCONNECTED:
+		pat.play("-G*",PL_PAT_CANINT)
+	case PL_BT_EVENT_ENABLED:
+		pat.play("-G*",PL_PAT_CANINT)
+		bt.advertise = YES
+	end select
+end sub
+
+sub on_bt_data_arrival()
+	ble_cmd_recv_data()
+end sub
+
+sub on_button_pressed()
+	sys.debugprint(wln.ip + "\r\n")
+end sub
