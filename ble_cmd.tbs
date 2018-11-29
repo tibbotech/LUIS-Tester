@@ -149,7 +149,10 @@ public sub proc_bt_cmd(byref cmd_str as string)
 		goto reply_ok		
 
 	case "E": 'reboot -------------------------------------------
-		sys.reboot
+		wln.disable()
+		io.num=WLN_RST
+		io.state=LOW
+		sys.reboot()
 	
 	case else
 		goto reply_err

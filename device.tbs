@@ -17,6 +17,29 @@ sub settings_init()
 	end if
 end sub
 
+function dot_decimal_to_hex(stored_mac as string) as string
+	dim i as integer = 0
+	dim startpos as integer = 1
+	dim endpos as integer = 0
+	dim num as word = ""
+	dim hex_mac as string = ""
+	
+	for i = 0 to 5
+		endpos = instr(startpos,stored_mac,".",0)
+		num = val(  mid(stored_mac,startpos,  endpos-startpos) )
+		if num<>0 then
+			hex_mac = hex_mac + right(hex( num ),2) 
+		else
+			hex_mac = hex_mac + "00"
+		end if
+		startpos=endpos+1
+	next i
+	
+'	sys.debugprint(stored_mac + "\r\n")
+'	sys.debugprint("Hex Value is: "+hex_mac + "\r\n")
+	dot_decimal_to_hex = hex_mac
+end function
+
 sub wln2000_init()
 	if wln.enabled = NO then
 		wln.csmap=WLN_CS
@@ -46,8 +69,10 @@ sub wln2000_init()
 end sub
 
 sub bluetooth_init()
+	dim hex_mac as string = dot_decimal_to_hex(bt.mac)
+	dim advertise_name as string = BT_NAME + " " + mid(hex_mac,9, 2) + ":" + mid(hex_mac, 11, 2)
 	wln2000_init()
-	bt.name=BT_NAME
+	bt.name=advertise_name
 	bt.emulation=PL_WLN_BT_EMULATION_MODE_MICROCHIP
 	bt.txbuffrq(5)
 	bt.rxbuffrq(5)
@@ -69,8 +94,8 @@ sub webserver_start()
 	for f=8 to 15 'allocate five sockets for the webserver
 		sock.allowedinterfaces = "WLN"
 		sock.num=f
-		sock.txbuffrq(1)
-		sock.varbuffrq(1)
+		sock.txbuffrq(16)
+		sock.varbuffrq(16)
 		sock.redir(PL_REDIR_SOCK0 + sock.num)
 		sys.buffalloc
 
