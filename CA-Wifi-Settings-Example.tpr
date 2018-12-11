@@ -4,7 +4,7 @@ platform=TPP3W(G2)
 src_lib_ver=2_01_02
 name=CA-Wifi-Settings-Example
 output=CA-Wifi-Settings-Example.tpc
-debug=on
+debug=off
 defines= /dLCD_TYPE=SOLOMON_SSD1963 /dWLN_WPA=1 /dOBJECT_LCD=LCD_ENABLED /dOBJECT_FD=FD_ENABLED /dWLN_DEBUG_PRINT=1 /dOBJECT_KP=KP_ENABLED /dOBJECT_WLN=WLN_ENABLED
 transport=udp_winpcap
 [address1]
@@ -146,23 +146,27 @@ location=project
 path=sdf.txt
 type=xtext
 format=SDF_configurator
+condition=
 locked=no
 location=project
 [file19]
 path=sdf.html
 type=htmlc
 format=65001
+condition=
 locked=no
 location=project
 [file20]
 path=ble_cmd.tbh
 type=header
 format=
+condition=
 locked=no
 location=project
 [file21]
 path=ble_cmd.tbs
 type=basic
 format=
+condition=
 locked=no
 location=project

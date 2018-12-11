@@ -69,9 +69,9 @@ sub wln2000_init()
 end sub
 
 sub bluetooth_init()
+	wln2000_init()
 	dim hex_mac as string = dot_decimal_to_hex(bt.mac)
 	dim advertise_name as string = BT_NAME + " " + mid(hex_mac,9, 2) + ":" + mid(hex_mac, 11, 2)
-	wln2000_init()
 	bt.name=advertise_name
 	bt.emulation=PL_WLN_BT_EMULATION_MODE_MICROCHIP
 	bt.txbuffrq(5)

@@ -15,7 +15,7 @@ sub on_sys_init()
 	
 	'Set up Bluetooth -----------------------------------------------
 	bluetooth_init()
-	sys.debugprint("connect to device named " + BT_NAME + " from the Tibbo BLE mobile app\r\n")
+	sys.debugprint("connect to device named " + bt.name + " from the Tibbo BLE mobile app\r\n")
 end sub
 
 sub on_bt_event(bt_event as enum pl_bt_events)
