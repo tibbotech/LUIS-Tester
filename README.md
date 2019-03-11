@@ -1,11 +1,11 @@
-# CA-Wifi-Settings-Example
+# LUIS-Tester
 
 ## Features
 This example showcases:
 
 - setup and usage of WA2000 wifi module 
 - WA2000 bluetooth setup and bt object basic usage 
-- using the Tibbo BLE mobile app to change device wifi settings via bluetooth 
+- using the LUIS mobile app to change device wifi settings via bluetooth 
 
 ## Requirements
 - platforms library version >= 2.1.2
@@ -16,7 +16,7 @@ This example showcases:
 ## Running the sample
 1. Build and run the project on the device in Debug mode, the device will have bluetooth enabled and wifi disabled
 
-2. Open the Tibbo BLE mobile app and tap on the device named "BLE Sample xx:xx" (xx:xx is last two bytes of device's mac address) to connect to the device
+2. Open the LUIS mobile app and tap on the device named "BLE_Device_1 xx:xx" (xx:xx is last two bytes of device's mac address) to connect to the device
 
 3. A page with the device settings will be shown once bluetooth connection has been established.
 
@@ -71,7 +71,7 @@ end sub
 
 
 ## Explanation
-This sample demonstrates usage of the Tibbo BLE mobile app to modify settings defined in the `sdf.txt` file of the Tibbo Basic project. The device starts off with wifi disabled as specified in the `settings.xtxt` configuration file. When a mobile device connects to the device via the Tibbo BLE app, the device serves an html page to the mobile app via bluetooth. This html page is a web app that contains features similar to the Tibbo DS manager to change device settings. The user would then update the settings on the mobile app according to their local wifi access point, save the settings, and reboot. After the reboot, the device will attempt to connect to the access point based on the saved wifi settings. 
+This sample demonstrates usage of the LUIS mobile app to modify settings defined in the `sdf.txt` file of the Tibbo Basic project. The device starts off with wifi disabled as specified in the `settings.xtxt` configuration file. When a mobile device connects to the device via the LUIS app, the device serves an html page to the mobile app via bluetooth. This html page is a web app that contains features similar to the Tibbo DS manager to change device settings. The user would then update the settings on the mobile app according to their local wifi access point, save the settings, and reboot. After the reboot, the device will attempt to connect to the access point based on the saved wifi settings. 
 
 The files required serving a settings configurator html page are:
 - ble_cmd.tbs
