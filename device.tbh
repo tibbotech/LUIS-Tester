@@ -1,4 +1,4 @@
-#define BT_NAME "BLE Sample"
+#define BT_NAME "BLE_Device_1"
 
 declare sub settings_init()
 declare sub wln2000_init()

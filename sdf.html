@@ -1,13 +1,16 @@
 <!doctype html>
 <html lang="en">
 <head>
-    <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-    <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="./web/bootstrap.min.css" />
 
     <style>
+		html {
+			-ms-touch-action: manipulation;
+			touch-action: manipulation;
+		}
+
         body {
             background-color: #f8f9fa !important;
         }
@@ -20,15 +23,36 @@
             width: auto;
             margin-top: 3px;
 		}
+		.nav {
+			flex-wrap: nowrap !important;
+		}
+
+		@media (max-width: 991.98px) {
+
+			.bd-navbar .navbar-nav-scroll {
+				max-width: 100%;
+				height: 2.5rem;
+				margin-top: .25rem;
+				overflow: hidden
+			}
+
+			.bd-navbar .navbar-nav-scroll .navbar-nav {
+				padding-bottom: 2rem;
+				overflow-x: auto;
+				white-space: nowrap;
+				-webkit-overflow-scrolling: touch
+			}
+
+            .navbar-brand {
+                margin-right: 0 !important;
+            }
+		}
     </style>
     <title>Settings Configurator</title>
 </head>
 <body>
-    <div class="container">
-		<img id="logo" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAPYAAAB9CAMAAACmu27hAAACwVBMVEXsbC7sbC7sbS/sbTDsbjDsbjHsbzLsbzPtcDTtcTXtcjbtcjftczjtczntdDntdTrtdTvtdjztdj3tdz7teD7ueD/ueUDueUHuekLue0PufETufEXufUbufUfufkfufkjuf0nvgErvgEvvgUzvgk3vgk7vg0/vhFDvhVHvhVLvhlPvh1Tvh1XwiFXwiFbwiVfwiVjwilnwi1nwi1rwjFvwjFzwjV3wjV7wjl7wj1/xj2DxkGHxkGLxkWLxkWPxkmTxk2Xxk2bxlGfxlWjxlmnxlmryl2vymGzymG3ymW7ymm/ymnDym3DynHLynHPynXTynnTynnXzn3bzn3fzoHjzoHnzoXnzonrzonvzo3zzo33zpH3zpH7zpX/zpoD0poH0p4L0qIP0qYT0qYX0qob0qof0q4f0q4j0rIn0rYr0rYv0rov1roz1r431r471sI/1sZD1spH1spL1s5P1s5T1tJT1tZX1tZb2tpf2tpj2t5n2uJn2uJr2uZv2uZz2up32u572vJ/2vKD2vaH3vaL3vqL3vqP3v6T3wKX3wKb3wab3waf3wqj3wqn3w6r3xKv3xaz4xa34xq74x6/4yLD4yLH4ybL4ybP4yrT4y7T4y7X4zLb4zLf5zbj5zbn5zrn5z7r5z7v50Lz50L350b350r/508D508H51ML61cP61cT61sX618b62Mf62Mj62cn62sr62sv628v63M373M773c/73s/73tD739H739L74NP74NT74dT74tX74tb749f749j75Nj85Nn85dr85tv85tz859386N786d/86eD86uH86+L86+P97OT97eX97eb97uf97+j98Or98ev98uz98u398+7+8+/+9O/+9fD+9fH+9vL+9vP+9/T++PT++PX++fb++ff++vj++/n//Pr//Pv//fz//f3//v3//v7///+Xrz7eAAAAAXRSTlO7HFWyYgAAAAFiS0dE6sjaFi4AAAm/SURBVHja7Zz7QxVVHsA9cIF7eV7EANG1QOWaZrgWtaDlRiq0ahSrppYrKSYh3q5btmmt+EhXy9JyTVNL0SQ3pdKs0KIyFUStLB/Fo4iHV+79K5rvzNyZc87MmTtrF3Zgz/lBz5z5njPnc8/7+/0e+qH/x9CvH8fm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"/>
-        <div id="settings-container">
-        </div>
-    </div>
+    <div id="settings-container">
+	</div>
     <br/>
     <script src="./web/jquery-3.3.1.slim.min.js"></script>
     <script src="./web/popper.min.js"></script>
@@ -41,6 +65,9 @@
         `;
         var settings = new Settings(sdf, $('#settings-container'));
         settings.init();
+		setTimeout(function () {
+			settings.refreshSettings();
+		}, 2000);
     </script>
 </body>
 </html>
