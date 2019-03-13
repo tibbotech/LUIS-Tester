@@ -17,157 +17,17 @@ sub settings_init()
 	end if
 end sub
 
-function dot_decimal_to_hex(stored_mac as string) as string
-	dim i as integer = 0
-	dim startpos as integer = 1
-	dim endpos as integer = 0
-	dim num as word = ""
-	dim hex_mac as string = ""
-	
-	for i = 0 to 5
-		endpos = instr(startpos,stored_mac,".",0)
-		num = val(  mid(stored_mac,startpos,  endpos-startpos) )
-		if num<>0 then
-			hex_mac = hex_mac + right(hex( num ),2) 
-		else
-			hex_mac = hex_mac + "00"
-		end if
-		startpos=endpos+1
-	next i
-	
-'	sys.debugprint(stored_mac + "\r\n")
-'	sys.debugprint("Hex Value is: "+hex_mac + "\r\n")
-	dot_decimal_to_hex = hex_mac
-end function
+'LUIS Bluetooth callbacks ====================================================
 
-sub wln2000_init()
-	if wln.enabled = NO then
-		wln.csmap=WLN_CS
-		io.num=WLN_CS
-		io.enabled=YES
-		wln.dimap=WLN_DI
-		wln.domap=WLN_DO
-		io.num=WLN_DO
-		io.enabled=YES
-		wln.clkmap=WLN_CLK
-		io.num=WLN_CLK
-		io.enabled=YES
-		io.num=WLN_RST
-		io.enabled=YES
-		wln.disable
-		
-		io.num=WLN_RST
-		io.state=LOW
-		delay_ms(1)
-		io.state=HIGH
-		
-		wln.buffrq(5)
-		sys.buffalloc()
-		
-		wln.boot(0)
-	end if
-end sub
 
-sub bluetooth_init()
-	wln2000_init()
-	dim hex_mac as string = dot_decimal_to_hex(bt.mac)
-	dim advertise_name as string = BT_NAME + " " + mid(hex_mac,9, 2) + ":" + mid(hex_mac, 11, 2)
-	bt.name=advertise_name
-	bt.emulation=PL_WLN_BT_EMULATION_MODE_MICROCHIP
-	bt.txbuffrq(5)
-	bt.rxbuffrq(5)
-	sys.buffalloc()
-	bt.enable()
-end sub
 
-sub wifi_connect()
-	dim SSID as string = stg_get("APN",0)
-	dim pwd as string= stg_get("PWD",0)
-	dim security_mode as byte = stg_get("SEC", 0)
-	
-	wln_start(SSID,security_mode,pwd,PL_WLN_DOMAIN_FCC,YES,PL_WLN_ASCAN_INFRASTRUCTURE)
-end sub
 
-sub webserver_start()
-	dim f as byte
-	sys.debugprint("web server starting at ip:" + wln.ip + "\r\n")
-	for f=8 to 15 'allocate five sockets for the webserver
-		sock.allowedinterfaces = "WLN"
-		sock.num=f
-		sock.txbuffrq(16)
-		sock.varbuffrq(16)
-		sock.redir(PL_REDIR_SOCK0 + sock.num)
-		sys.buffalloc
-
-		sock.protocol=PL_SOCK_PROTOCOL_TCP
-		sock.httpportlist="80"
-		sock.inconmode=PL_SOCK_INCONMODE_ANY_IP_ANY_PORT
-	next f
-	sys.debugprint("go to http://" + wln.ip + "/index.html in the browser to see the home page\r\n")
-end sub
-
-sub delay_ms(delay as integer)
-	sys.timercountms=0
-	while sys.timercountms<delay
-	wend
-end sub
-
-'required callbacks ====================================================
-sub on_sys_timer()
-	wln_proc_timer()
-	dhcp_proc_timer()
-end sub
-sub on_wln_task_complete(completed_task as pl_wln_tasks)
-	wln_proc_task_complete(completed_task)
-end sub
-sub on_wln_event(wln_event as pl_wln_events)
-	wln_proc_event(wln_event)
-end sub
-sub on_sock_data_arrival()
-	dhcp_proc_data()
-end sub
-sub callback_dhcp_ok(renew as no_yes, interface as pl_sock_interfaces, byref ip as string, byref gateway_ip as string, byref netmask as string, lease_time as dword)
-	wln.ip=ip
-	wln.gatewayip=gateway_ip
-	wln.netmask=netmask
-	webserver_start()
-end sub
-sub callback_wln_ok()
-	if stg_get("WD",0) = 0 then
-		'set ip if dhcp is disabled
-		wln.ip = stg_get("WI",0)
-		wln.netmask = stg_get("WN", 0)
-		wln.gatewayip = stg_get("WG", 0)
-		webserver_start()
-	else
-		dhcp_start(PL_SOCK_INTERFACE_WLN,"","")
-	end if
-end sub
-'=======================================================================
-
+'==================================================================
 
 'other callbacks-------------------------------------
-sub callback_wln_rescan_for_better_ap()
-end sub
-sub callback_wln_rescan_result(current_rssi as byte, scan_rssi as byte, different_ap as no_yes)
-end sub
-sub callback_wln_pre_buffrq(required_buff_pages as byte)
-end sub
-sub callback_wln_starting_association()
-end sub
-sub callback_wln_failure(wln_state as en_wln_status_codes)
-end sub
 sub callback_stg_error(byref stg_name_or_num as string,index as byte,status as en_stg_status_codes)
 end sub
 sub callback_stg_pre_get(byref stg_name_or_num as string,index as byte,byref stg_value as string)
 end sub
 sub callback_stg_post_set(byref stg_name_or_num as string, index as byte,byref stg_value as string)
-end sub
-sub callback_dhcp_failure(interface as pl_sock_interfaces,failure_code as en_dhcp_status_codes)
-end sub
-sub callback_dhcp_pre_clear_ip(interface as pl_sock_interfaces)
-end sub
-sub callback_dhcp_pre_buffrq(required_buff_pages as byte)
-end sub
-sub callback_dhcp_buff_released()
 end sub

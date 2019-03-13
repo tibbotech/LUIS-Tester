@@ -1,9 +1,3 @@
 #define BT_NAME "BLE_Device_1"
 
 declare sub settings_init()
-declare sub wln2000_init()
-declare sub bluetooth_init()
-declare sub delay_ms(delay as integer)
-declare function connect_to_ap(byref ap_name as string, security_mode as pl_wln_security_modes, byref key as string, domain as pl_wln_domains) as en_wln_status_codes
-declare sub wifi_connect()
-declare sub webserver_start()

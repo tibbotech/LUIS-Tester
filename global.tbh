@@ -1,21 +1,15 @@
 'DEFINES-------------------------------------------------------------
-#define WLN_RST PL_IO_NUM_51
-#define WLN_CS PL_IO_NUM_49
-#define WLN_DI PL_IO_NUM_52
-#define WLN_DO PL_IO_NUM_50
-#define WLN_CLK PL_IO_NUM_53
 #define DHCP_DEBUG_PRINT 1
-#define WLN_AVAILABLE 1
+#define LUIS_SETTINGS_FILE "luis.xtxt"
+
+#define LUIS_DEBUG_PRINT 1
 
 
 'INCLUDES------------------------------------------------------------
 includepp "settings.xtxt"
 include "settings\trunk\settings.tbh"
-include "wln\trunk\wln.tbh"
-include "sock\trunk\sock.tbh"
-include "dhcp\trunk\dhcp.tbh"
 
-include "ble_cmd.tbh"
+include "luis.tbh"
 include "device.tbh"
 'DECLARATIONS--------------------------------------------------------
 

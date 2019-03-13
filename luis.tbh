@@ -1,0 +1,59 @@
+'=============================================================
+'		LUIS.TBH
+'=============================================================
+
+#ifndef LUIS_SETTINGS_FILE
+#error "please define LUIS_SETTINGS_FILE with the name of the LUIS settings file"
+#endif
+
+#ifndef LUIS_BT_RST
+	#define LUIS_BT_RST PL_IO_NUM_51
+#endif
+
+'CS line mapping.
+#ifndef LUIS_BT_CS
+	#define LUIS_BT_CS PL_IO_NUM_49
+#endif
+
+'DI line mapping.
+#ifndef LUIS_BT_DI
+	#define LUIS_BT_DI PL_IO_NUM_52
+#endif
+
+'DO line mapping.
+#ifndef LUIS_BT_DO
+	#define LUIS_BT_DO PL_IO_NUM_50
+#endif
+
+'CLK line mapping.
+#ifndef LUIS_BT_CLK
+	#define LUIS_BT_CLK PL_IO_NUM_53
+#endif
+
+#define LUIS_HTML_FILE "luis.html"
+
+#ifndef LUIS_DEBUG_PRINT
+	#define LUIS_DEBUG_PRINT 0
+#endif
+
+const LUIS_CMD_ESC_CHAR = "@"
+const LUIS_PAT_BLINK_BOTH_IN_TURNS_FAST=	"GRGRGRGR**"
+
+#define LUIS_STX 2
+#define LUIS_CR 13
+#define LUIS_MAX_BT_CMD_LEN 30
+#define LUIS_MAX_BT_RPL_LEN 30
+
+enum en_luis_status_codes	
+	EN_LUIS_STATUS_OK,			'Operation completed successfully
+	EN_LUIS_STATUS_NOT_STARTED,	'luis_start() was not called or failed
+	EN_LUIS_BT_FAILURE			'BLE interface failure
+end enum
+
+
+declare function luis_start() as en_luis_status_codes
+declare function luis_recv_data() as en_luis_status_codes
+
+declare sub luis_on_bt_data_sent()
+declare sub luis_on_bt_event(bt_event as enum pl_bt_events)
+declare sub luis_on_bt_overrun()
