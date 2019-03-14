@@ -1,6 +1,6 @@
 'DEFINES-------------------------------------------------------------
 #define DHCP_DEBUG_PRINT 1
-#define LUIS_SETTINGS_FILE "luis.xtxt"
+#define LUIS_CONFIG_FILE "luis.xtxt"
 
 #define LUIS_DEBUG_PRINT 1
 

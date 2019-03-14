@@ -1,5 +1,12 @@
 include "global.tbh"
 
+Const PAT_BT_DISABLED="-~"
+Const PAT_BT_ENABLED="G-~"
+Const PAT_BT_CONNECTED="G~"
+
+dim bt_enabled as no_yes=NO
+dim bt_connected as no_yes=NO
+
 '====================================================================
 dim tcp_sock as byte
 
@@ -13,24 +20,49 @@ end sub
 
 sub on_bt_event(bt_event as enum pl_bt_events)
 	luis_on_bt_event(bt_event)
-	select case bt_event
-	case PL_BT_EVENT_CONNECTED:
-		pat.play("G*",PL_PAT_CANINT)
-	case PL_BT_EVENT_DISCONNECTED:
-		pat.play("-G*",PL_PAT_CANINT)
-	case PL_BT_EVENT_ENABLED:
-		pat.play("-G*",PL_PAT_CANINT)
-	end select
 end sub
 
 sub on_bt_data_sent()
 	luis_on_bt_data_sent()
 end sub
 
-sub on_bt_overrun()
-	luis_on_bt_overrun()
+sub on_bt_data_arrival()
+	luis_bt_data_arrival()
 end sub
 
-sub on_bt_data_arrival()
-	luis_recv_data()
+sub callback_luis_bt_connected()
+	bt_connected=YES
+	pat.play(PAT_BT_CONNECTED,PL_PAT_CANINT)
+end sub
+
+sub callback_luis_bt_disconnected()
+	bt_connected=NO
+	pat.play(PAT_BT_ENABLED,PL_PAT_CANINT)
+end sub
+
+sub callback_luis_bt_enabled()
+	bt_enabled=YES
+	pat.play(PAT_BT_ENABLED,PL_PAT_CANINT)
+end sub
+
+sub callback_luis_bt_disabled()
+	bt_enabled=NO
+	bt_connected=NO
+	pat.play(PAT_BT_DISABLED,PL_PAT_CANINT)
+end sub
+
+sub callback_luis_buzz_command()
+	pat.play("-GRGRGRGR-**",PL_PAT_CANINT)
+end sub
+
+sub on_pat()
+	if bt_connected=YES then
+		pat.play(PAT_BT_CONNECTED,PL_PAT_CANINT)
+	else
+		if bt_enabled=YES then
+			pat.play(PAT_BT_ENABLED,PL_PAT_CANINT)
+		else	
+			pat.play(PAT_BT_DISABLED,PL_PAT_CANINT)
+		end if
+	end if
 end sub

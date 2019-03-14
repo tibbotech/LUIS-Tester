@@ -51,17 +51,10 @@ sub on_bt_data_arrival()
 	luis_recv_data()
 end sub
 
-```
-
-4. Add optional event handlers
-```
 sub on_bt_data_sent()
 	luis_on_bt_data_sent()
 end sub
 
-sub on_bt_overrun()
-	luis_on_bt_overrun()
-end sub
 ```
 
 
