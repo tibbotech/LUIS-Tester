@@ -2,7 +2,7 @@
 '			LUIS LIBRARY
 '***********************************************************************************************************
 include "global.tbh"
-
+'--------------------------------------------------------------------------------
 const LUIS_STAMP="LUIS> "
 const LUIS_CR_LF=chr(13)+chr(10)
 const LUIS_INIT_SIGNATURE=&hB5A4
@@ -13,27 +13,19 @@ const LUIS_STX=2
 const LUIS_CR=13
 const LUIS_MAX_BT_CMD_LEN=30
 const LUIS_MAX_BT_RPL_LEN=30
-
+'--------------------------------------------------------------------------------
 declare sub luis_debugprint(byref print_data as string)
 declare sub luis_delay_ms(delay as integer)
 declare function luis_dot_decimal_to_hex(stored_mac as string) as string
-
+'--------------------------------------------------------------------------------
 dim luis_init_flag as word=0
 dim luis_GOP_result as string
 dim luis_current_send_chunk as string
 dim luis_html_placeholder_start as dword
 dim luis_html_placeholder_end as dword
 dim luis_html_read_pointer as dword
-
-enum en_luis_html_send_states
-	EN_LUIS_HTML_GOP_RESULT,
-	EN_LUIS_HTML_SEND_PART1,
-	EN_LUIS_HTML_SEND_SETTINGS,
-	EN_LUIS_HTML_SEND_PART2
-end enum
-
 dim luis_html_send_state as en_luis_html_send_states
-
+'================================================================================
 
 function luis_start() as en_luis_status_codes
 	luis_start=EN_LUIS_STATUS_OK
@@ -99,8 +91,8 @@ function luis_start() as en_luis_status_codes
 		luis_start=EN_LUIS_FILE_CONFIG_ERROR
 		luis_debugprint("Failed to open LUIS Library file")
 	end if
-	dim settings_size as integer = romfile.size
-	LUIS_GOP_result="{\x22type\x22:\x22spa\x22,\x22length\x22:"+lstr(html_size + settings_size - len(LUIS_PLACEHOLDER_STR))+"}"
+	dim config_size as integer = romfile.size
+	LUIS_GOP_result="{\x22type\x22:\x22spa\x22,\x22length\x22:"+lstr(html_size + config_size - len(LUIS_PLACEHOLDER_STR))+"}"
 	
 	if luis_start=EN_LUIS_STATUS_OK then
 		luis_init_flag=LUIS_INIT_SIGNATURE
@@ -170,7 +162,7 @@ sub luis_on_bt_data_sent()
 		romfile.pointer32=luis_html_read_pointer
 		if luis_html_read_pointer + chunk_size > luis_html_placeholder_start then
 			chunk_size = luis_html_placeholder_start - luis_html_read_pointer
-			luis_html_send_state=EN_LUIS_HTML_SEND_SETTINGS
+			luis_html_send_state=EN_LUIS_HTML_SEND_CONFIG
 		end if
 		luis_current_send_chunk=romfile.getdata(chunk_size)
 		if luis_html_send_state<>EN_LUIS_HTML_SEND_PART1 then
@@ -178,7 +170,7 @@ sub luis_on_bt_data_sent()
 		else
 			luis_html_read_pointer=romfile.pointer32
 		end if
-	case EN_LUIS_HTML_SEND_SETTINGS:
+	case EN_LUIS_HTML_SEND_CONFIG:
 		romfile.open(LUIS_CONFIG_FILE)
 		romfile.pointer32=luis_html_read_pointer
 		luis_current_send_chunk=romfile.getdata(chunk_size)

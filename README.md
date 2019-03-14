@@ -54,6 +54,14 @@ end sub
 sub on_bt_data_sent()
 	luis_on_bt_data_sent()
 end sub
+```
+4. Add optional callbacks
+```
+sub callback_luis_bt_connected()
+sub callback_luis_bt_disconnected()
+sub callback_luis_bt_enabled()
+sub callback_luis_bt_disabled()
+sub callback_luis_buzz_command()
 
 ```
 
@@ -66,10 +74,4 @@ The files required serving a settings configurator html page are:
 - luis.tbh
 - luis.html
 
-Including this call in the `on_bt_data_arrival()` will allow for processing of bluetooth commands sent from the mobile app in `ble_cmd.tbs`
-```
-sub on_bt_data_arrival()
-    ble_cmd_recv_data()
-end sub
-```
 The luis.html page being served will dynamically contain the settings defined in your `luis.xtxt` file.

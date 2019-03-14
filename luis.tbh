@@ -58,6 +58,14 @@ enum en_luis_status_codes
 	EN_LUIS_FILE_CONFIG_ERROR	'Failed to open configuration file
 end enum
 
+'State of html file being sent
+enum en_luis_html_send_states
+	EN_LUIS_HTML_GOP_RESULT,
+	EN_LUIS_HTML_SEND_PART1,
+	EN_LUIS_HTML_SEND_CONFIG,
+	EN_LUIS_HTML_SEND_PART2
+end enum
+
 declare function luis_start() as en_luis_status_codes
 'Boots the WA2000, enables bluetooth, and sets the advertised name of the device
 declare function luis_bt_data_arrival() as en_luis_status_codes
@@ -73,14 +81,20 @@ declare sub luis_on_bt_data_sent()
 'Handles sending the html file to the device
 declare sub luis_on_bt_event(bt_event as enum pl_bt_events)
 'Callback procedure, call when state of bluetooth changes<br/>
+
 declare sub callback_luis_bt_connected()
-'Callback procedure, a device has connected via bluetooth
+'Callback procedure, a device has connected via bluetooth.<br/>
+'Procedure body has to be created elsewhere in the project (externally with respect to the library).
 declare sub callback_luis_bt_disconnected()
-'Callback procedure, a bluetooth device has disconnected
+'Callback procedure, a bluetooth device has disconnected.<br/>
+'Procedure body has to be created elsewhere in the project (externally with respect to the library).
 declare sub callback_luis_bt_enabled()
-'Callback procedure, bluetooth has been enabled successfully<br/>
-'bt.enable() is asynchronous so use this to tell if bluetooth has been started successfully
+'Callback procedure, bluetooth has been enabled successfully.<br/>
+'bt.enable() is asynchronous so use this to tell if bluetooth has been started successfully<br/>
+'Procedure body has to be created elsewhere in the project (externally with respect to the library).
 declare sub callback_luis_bt_disabled()
-'Callback procedure, bluetooth has been disabled
+'Callback procedure, bluetooth has been disabled.<br/>
+'Procedure body has to be created elsewhere in the project (externally with respect to the library).
 declare sub callback_luis_buzz_command()
-'Callback procedure, received the "B" buzz command from the connected device
+'Callback procedure, received the "B" buzz command from the connected device.<br/>
+'Procedure body has to be created elsewhere in the project (externally with respect to the library).

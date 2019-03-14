@@ -1,7 +1,7 @@
 'DEFINES-------------------------------------------------------------
 #define DHCP_DEBUG_PRINT 1
 #define LUIS_CONFIG_FILE "luis.xtxt"
-
+#define BT_NAME "BLE_Device_1"
 #define LUIS_DEBUG_PRINT 1
 
 
@@ -10,8 +10,6 @@ includepp "settings.xtxt"
 include "settings\trunk\settings.tbh"
 
 include "luis.tbh"
-include "device.tbh"
 'DECLARATIONS--------------------------------------------------------
 
-declare sub proc_bt_cmd(byref cmd_str as string)
-
+declare sub settings_init()
