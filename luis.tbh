@@ -8,38 +8,38 @@
 	#define LUIS_DEBUG_PRINT 0
 #endif
 
-'Name of the LUIS configuration file
+'Name of the LUIS configuration file.
 'This file must be in your project and contain correct data!
 #ifndef LUIS_CONFIG_FILE
 	#error "please define LUIS_CONFIG_FILE with the name of the LUIS configuration file"
 #endif
 
-'Bluetooth RX Buffer
+'Size of Bluetooth RX Buffer (in pages)
 #ifndef LUIS_BT_RX_BUF_SIZE
 	#define LUIS_BT_RX_BUF_SIZE 5
 #endif
 
-'Bluetooth TX Buffer
+'Size of Bluetooth TX Buffer (in pages)
 #ifndef LUIS_BT_TX_BUF_SIZE
 	#define LUIS_BT_TX_BUF_SIZE 5
 #endif
 
-'RST line mapping.
+'RST line mapping
 #ifndef LUIS_BT_RST
 	#define LUIS_BT_RST PL_IO_NUM_51
 #endif
 
-'CS line mapping.
+'CS line mapping
 #ifndef LUIS_BT_CS
 	#define LUIS_BT_CS PL_IO_NUM_49
 #endif
 
-'DI line mapping.
+'DI line mapping
 #ifndef LUIS_BT_DI
 	#define LUIS_BT_DI PL_IO_NUM_52
 #endif
 
-'DO line mapping.
+'DO line mapping
 #ifndef LUIS_BT_DO
 	#define LUIS_BT_DO PL_IO_NUM_50
 #endif
@@ -49,52 +49,45 @@
 	#define LUIS_BT_CLK PL_IO_NUM_53
 #endif
 
-'Status codes for luis-related operations
+'Status codes
 enum en_luis_status_codes	
 	EN_LUIS_STATUS_OK,			'Operation completed successfully
 	EN_LUIS_STATUS_NOT_STARTED,	'luis_start() was not called or failed
-	EN_LUIS_BT_FAILURE,			'BLE interface failure
-	EN_LUIS_FILE_HTML_ERROR,	'Failed to open html file
-	EN_LUIS_FILE_CONFIG_ERROR	'Failed to open configuration file
+	EN_LUIS_BT_FAILURE,			'Bluetooth interface failure
+	EN_LUIS_FILE_HTML_ERROR,	'Failed to open luis.html file
+	EN_LUIS_FILE_CONFIG_ERROR	'Failed to open <LUIS_CONFIG_FILE> configuration file
 end enum
 
-'State of html file being sent
-enum en_luis_html_send_states
-	EN_LUIS_HTML_GOP_RESULT,
-	EN_LUIS_HTML_SEND_PART1,
-	EN_LUIS_HTML_SEND_CONFIG,
-	EN_LUIS_HTML_SEND_PART2
-end enum
 
-declare function luis_start() as en_luis_status_codes
-'Boots the WA2000, enables bluetooth, and sets the advertised name of the device
+declare function luis_start(byref bt_name as string) as en_luis_status_codes
+'Boots the WA2000, enables Bluetooth, and sets the advertised name of the device
+
 declare function luis_bt_data_arrival() as en_luis_status_codes
-'Parses commands sent by the connected device and processes them<br/>
-'currently supports:<br/>
-'GOP - get operation mode, returns {type:"SPA", length:file_length}<br/>
-'B - Buzzes the device<br/>
-'G<settings_name> - gets settings with name<br/>
-'S<settings_name> - sets setting with name<br/>
-'E - reboots the device<br/>
-'I - initializes settings<br/>
+'Call this from on_bt_data_arrival()
+
 declare sub luis_on_bt_data_sent()
-'Handles sending the html file to the device
+'Call this from on_bt_data_sent()
+
 declare sub luis_on_bt_event(bt_event as enum pl_bt_events)
-'Callback procedure, call when state of bluetooth changes<br/>
+'Call this from on_bt_event()
 
 declare sub callback_luis_bt_connected()
-'Callback procedure, a device has connected via bluetooth.<br/>
+'Callback procedure, a host device has connected via Bluetooth.<br/>
 'Procedure body has to be created elsewhere in the project (externally with respect to the library).
+
 declare sub callback_luis_bt_disconnected()
-'Callback procedure, a bluetooth device has disconnected.<br/>
+'Callback procedure, a host device has disconnected.<br/>
 'Procedure body has to be created elsewhere in the project (externally with respect to the library).
+
 declare sub callback_luis_bt_enabled()
-'Callback procedure, bluetooth has been enabled successfully.<br/>
-'bt.enable() is asynchronous so use this to tell if bluetooth has been started successfully<br/>
+'Callback procedure, Bluetooth has been enabled successfully.<br/>
+'luis_start() is partially asynchronous. This sub is called after Bluetooth interface becomes ready.<br/>
 'Procedure body has to be created elsewhere in the project (externally with respect to the library).
+
 declare sub callback_luis_bt_disabled()
-'Callback procedure, bluetooth has been disabled.<br/>
+'Callback procedure, indicates that the Bluetooth has failed. Call luis_start() to restart it.<br/>
 'Procedure body has to be created elsewhere in the project (externally with respect to the library).
+
 declare sub callback_luis_buzz_command()
-'Callback procedure, received the "B" buzz command from the connected device.<br/>
+'Callback procedure, indicates that the buzz ("B") command was received from the host.<br/>
 'Procedure body has to be created elsewhere in the project (externally with respect to the library).

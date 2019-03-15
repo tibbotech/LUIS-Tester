@@ -1,7 +1,5 @@
 'DEFINES-------------------------------------------------------------
-#define DHCP_DEBUG_PRINT 1
 #define LUIS_CONFIG_FILE "luis.xtxt"
-#define BT_NAME "BLE_Device_1"
 #define LUIS_DEBUG_PRINT 1
 
 

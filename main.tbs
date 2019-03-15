@@ -1,5 +1,7 @@
 include "global.tbh"
 
+Const BT_NAME="BLE_Device_1"
+
 Const PAT_BT_DISABLED="-~"
 Const PAT_BT_ENABLED="G-~"
 Const PAT_BT_CONNECTED="G~"
@@ -15,7 +17,7 @@ sub on_sys_init()
 	settings_init()	
 		
 	'Set up Bluetooth -----------------------------------------------
-	luis_start()
+	luis_start(BT_NAME)
 end sub
 
 sub on_bt_event(bt_event as enum pl_bt_events)
@@ -49,6 +51,7 @@ sub callback_luis_bt_disabled()
 	bt_enabled=NO
 	bt_connected=NO
 	pat.play(PAT_BT_DISABLED,PL_PAT_CANINT)
+	luis_start(BT_NAME)
 end sub
 
 sub callback_luis_buzz_command()

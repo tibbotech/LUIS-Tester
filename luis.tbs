@@ -1,7 +1,9 @@
 '***********************************************************************************************************
 '			LUIS LIBRARY
 '***********************************************************************************************************
+
 include "global.tbh"
+
 '--------------------------------------------------------------------------------
 const LUIS_STAMP="LUIS> "
 const LUIS_CR_LF=chr(13)+chr(10)
@@ -13,10 +15,20 @@ const LUIS_STX=2
 const LUIS_CR=13
 const LUIS_MAX_BT_CMD_LEN=30
 const LUIS_MAX_BT_RPL_LEN=30
+
+'State of html file sending
+enum en_luis_html_send_states
+	EN_LUIS_HTML_GOP_RESULT,
+	EN_LUIS_HTML_SEND_PART1,
+	EN_LUIS_HTML_SEND_CONFIG,
+	EN_LUIS_HTML_SEND_PART2
+end enum
+
 '--------------------------------------------------------------------------------
 declare sub luis_debugprint(byref print_data as string)
 declare sub luis_delay_ms(delay as integer)
 declare function luis_dot_decimal_to_hex(stored_mac as string) as string
+
 '--------------------------------------------------------------------------------
 dim luis_init_flag as word=0
 dim luis_GOP_result as string
@@ -25,10 +37,14 @@ dim luis_html_placeholder_start as dword
 dim luis_html_placeholder_end as dword
 dim luis_html_read_pointer as dword
 dim luis_html_send_state as en_luis_html_send_states
-'================================================================================
 
-function luis_start() as en_luis_status_codes
+'================================================================================
+function luis_start(byref bt_name as string) as en_luis_status_codes
 	luis_start=EN_LUIS_STATUS_OK
+	if luis_init_flag=LUIS_INIT_SIGNATURE then
+		exit function
+	end if
+	
 	
 	#if LUIS_DEBUG_PRINT
 		luis_debugprint("---START---")
@@ -70,9 +86,7 @@ function luis_start() as en_luis_status_codes
 		luis_init_flag=0
 		luis_start=EN_LUIS_BT_FAILURE
 	else
-		dim hex_mac as string = luis_dot_decimal_to_hex(bt.mac)
-		dim advertise_name as string = BT_NAME + " " + mid(hex_mac,9, 2) + ":" + mid(hex_mac, 11, 2)
-		bt.name=advertise_name
+		bt.name=bt_name
 		bt.emulation=PL_WLN_BT_EMULATION_MODE_NORDIC
 		bt.txbuffrq(LUIS_BT_TX_BUF_SIZE)
 		bt.rxbuffrq(LUIS_BT_RX_BUF_SIZE)
@@ -191,7 +205,6 @@ sub luis_on_bt_data_sent()
 	
 end sub
 
-'====================================================================
 public sub luis_proc_bt_cmd(byref cmd_str as string)
 	dim reply_str as string(LUIS_MAX_BT_RPL_LEN)
 	dim x as byte
@@ -324,37 +337,14 @@ function luis_bt_data_arrival() as en_luis_status_codes
 	wend
 end function
 
-
 #if LUIS_DEBUG_PRINT
 sub luis_debugprint(byref print_data as string)
 	sys.debugprint(LUIS_STAMP+print_data+LUIS_CR_LF)
 end sub
 #endif
 
-
 sub luis_delay_ms(delay as integer)
 	dim end_time as dword=sys.timercountms+delay
 	while sys.timercountms<end_time
 	wend
 end sub
-
-function luis_dot_decimal_to_hex(stored_mac as string) as string
-	dim i as integer = 0
-	dim startpos as integer = 1
-	dim endpos as integer = 0
-	dim num as word = ""
-	dim hex_mac as string = ""
-	
-	for i = 0 to 5
-		endpos = instr(startpos,stored_mac,".",0)
-		num = val(  mid(stored_mac,startpos,  endpos-startpos) )
-		if num<>0 then
-			hex_mac = hex_mac + right(hex( num ),2) 
-		else
-			hex_mac = hex_mac + "00"
-		end if
-		startpos=endpos+1
-	next i
-	
-	luis_dot_decimal_to_hex = hex_mac
-end function
