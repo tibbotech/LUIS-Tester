@@ -29,7 +29,7 @@ sub on_bt_data_sent()
 end sub
 
 sub on_bt_data_arrival()
-	luis_bt_data_arrival()
+	luis_on_bt_data_arrival()
 end sub
 
 sub callback_luis_bt_connected()

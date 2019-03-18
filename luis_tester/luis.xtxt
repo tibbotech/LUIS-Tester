@@ -1,0 +1,10 @@
+I=WLN;D=Wi-Fi Settings;T=GROUP;
+I=WE;D=Wi-Fi mode;T=BYTE;C=STATIC;O=0- Disabled/0/1- Enabled/1;F=R;xIndex=1;
+I=WD;D=DHCP;T=BYTE;C=STATIC;O=0- Disabled/0/1- Enabled/1;F=R;S=WE!=0?"e":"i";xIndex=2;
+I=WI;D=IP-address;T=STRING;C=IPCTRL;S=WD==0&&WE==1?"e":"i";F=R*;xIndex=3;
+I=WG;D=Gateway IP;T=STRING;C=IPCTRL;S=WD==0&&WE==1?"e":"i";xIndex=4;
+I=WN;D=Subnet mask;T=STRING;C=IPCTRL;S=WD==0&&WE==1?"e":"i";xIndex=5;
+I=APN@1;D=Access point (SSID);T=STRING;C=EDIT;MAXLEN=15;F=R*;S=WE!=0?"e":"i";xIndex=6;
+I=SEC@1;D=AP security mode;T=BYTE;C=STATIC;S=WE!=0?"e":"i";O=0- Disabled/0/1- WEP64/1/2- WEP128/2/3- WPA-PSK (TKIP)/3/4- WPA2-PSK (AES)/4;xIndex=7;
+I=PWD@1;D=AP password;T=STRING;C=EDIT;MAXLEN=26;F=R*;S=WE==1?"e":"i";xIndex=8;
+@@STG_RefPath=settings.xtxt

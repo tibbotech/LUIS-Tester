@@ -6,8 +6,8 @@
 'INCLUDES------------------------------------------------------------
 includepp "settings.xtxt"
 include "settings\trunk\settings.tbh"
+include "luis\trunk\luis.tbh"
 
-include "luis.tbh"
 'DECLARATIONS--------------------------------------------------------
 
 declare sub settings_init()
