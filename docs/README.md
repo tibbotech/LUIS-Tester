@@ -3,6 +3,44 @@
 The LUIS library utilizes the WA2000 module's Bluetooth capabilities to allow for users to edit settings via the LUIS mobile application. 
 
 
+## Table of Contents
+
+- [Library Info](#library-info)
+- [Step-by-Step Usage Instructions](#step-by-step-usage-instructions)
+  * [Step 1: Dependencies](#step-1:-dependencies)
+  * [Step 2: Adding the LUIS Library](#step-2:-adding-the-luis-library)
+  * [Step 3: Configuration](#step-3:-configuration)
+    + [Configuration Group](#configuration-group)
+    + [Adding a Configuration](#adding-a-configuration)
+      - [Control Types](#control-types)
+        * [Static Control](#static-control)
+        * [Edit Control](#edit-control)
+        * [IP Control](#ip-control)
+        * [Ethernet Control](#ethernet-control)
+      - [Validation](#validation)
+      - [Status](#status)
+  * [Step 4: Sample Code](#step-4:-sample-code)
+- [Library Defines (Options)](#library-defines-(options))
+  * [LUIS_DEBUG_PRINT](#luis_debug_print)
+  * [LUIS_CONFIG_FILE](#luis_config_file)
+  * [LUIS_BT_RX_BUF_SIZE](#luis_bt_rx_buf_size)
+  * [LUIS_BT_TX_BUF_SIZE](#luis_bt_tx_buf_size)
+  * [LUIS_BT_RST](#luis_bt_rst)
+  * [LUIS_BT_CS](#luis_bt_cs)
+  * [LUIS_BT_DI](#luis_bt_di)
+  * [LUIS_BT_DO](#luis_bt_do)
+  * [LUIS_BT_CLK](#luis_bt_clk)
+- [En_luis_status_codes](#en-luis-status-codes)
+- [Library Procedures](#library-procedures)
+    + [Luis_start()](#luis-start())
+    + [Luis_on_bt_data_arrival()](#luis-on-bt-data-arrival())
+    + [Luis_on_bt_data_sent()](#luis-on-bt-data-sent())
+    + [Luis_on_bt_event()](#luis-on-bt-event())
+    + [Callback_luis_bt_connected()](#callback-luis-bt-connected())
+    + [Callback_luis_bt_disconnected()](#callback-luis-bt-disconnected())
+    + [Callback_luis_bt_enabled()](#callback-luis-bt-enabled())
+    + [Callback_luis_bt_disabled()](#callback-luis-bt-disabled())
+    + [Callback_luis_buzz_command()](#callback-luis-buzz-command())
 
 ## Library Info
 
@@ -17,8 +55,6 @@ The LUIS library utilizes the WA2000 module's Bluetooth capabilities to allow fo
 | Required buffer space: | 2 buffer pages minumum.<br />1 page for Bluetooth RX<br />1 page for Bluetooth TX |
 
 
-
-[TOC]
 
 
 
@@ -37,7 +73,7 @@ The LUIS library utilizes the WA2000 module's Bluetooth capabilities to allow fo
 2. Add **include "luis\trunk\luis.tbh"** to the includes section of the global.tbh file
 3. Add **luis_start()** to your **on_sys_init()**
 
-*If you want to use the **wln** library, **luis_start()** should be called after**wln_start()***
+> **Note:** If you want to use the **wln** library, **luis_start()** should be called after**wln_start()**
 
 4. Add [#define LUIS_DEBUG_PRINT 1](#Library-Defines-(Options)) to the defines section of the **global.tbh** file of your project. This way you will "see what's going on". Don't forget to remove this later, after you've made sure that the library operates as expected.
 
@@ -244,7 +280,9 @@ include "luis\trunk\luis.tbh"
 
 ## Library Defines (Options)
 
-### LUIS_DEBUG_PRINT (default=0)
+### LUIS_DEBUG_PRINT
+
+default=0
 
  0- no debug information.
 
@@ -254,31 +292,45 @@ include "luis\trunk\luis.tbh"
 
 File name of the LUIS configuration file in your project
 
-### LUIS_BT_RX_BUF_SIZE (default=5)
+### LUIS_BT_RX_BUF_SIZE
+
+default=5
 
 Size of Bluetooth RX Buffer (in pages)
 
-### LUIS_BT_TX_BUF_SIZE (default=5)
+### LUIS_BT_TX_BUF_SIZE
+
+default=5
 
 Size of Bluetooth TX Buffer (in pages)
 
-### LUIS_BT_RST(default=PL_IO_NUM_51)
+### LUIS_BT_RST
+
+default=PL_IO_NUM_51
 
 RST line mapping
 
-### LUIS_BT_CS(default=PL_IO_NUM_49)
+### LUIS_BT_CS
+
+default=PL_IO_NUM_49
 
 CS line mapping
 
-### LUIS_BT_DI(default=PL_IO_NUM_52)
+### LUIS_BT_DI
+
+default=PL_IO_NUM_52
 
 DI line mapping
 
-### LUIS_BT_DO(default=PL_IO_NUM_50)
+### LUIS_BT_DO
+
+default=PL_IO_NUM_50
 
 DO line mapping
 
-### LUIS_BT_CLK(default=PL_IO_NUM_53)
+### LUIS_BT_CLK
+
+default=PL_IO_NUM_53
 
 CLK line mapping
 
