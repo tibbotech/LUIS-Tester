@@ -20,7 +20,7 @@ The LUIS library utilizes the WA2000 module's Bluetooth capabilities to allow fo
       - [Validation](#validation)
       - [Status](#status)
   * [Step 4: Sample Code](#step-4-sample-code)
-- [Library Defines (Options)](#library-defines-(options))
+- [Library Defines (Options)](#library-defines-options)
   * [LUIS_DEBUG_PRINT](#luis_debug_print)
   * [LUIS_CONFIG_FILE](#luis_config_file)
   * [LUIS_BT_RX_BUF_SIZE](#luis_bt_rx_buf_size)
@@ -33,14 +33,14 @@ The LUIS library utilizes the WA2000 module's Bluetooth capabilities to allow fo
 - [En_luis_status_codes](#en-luis-status-codes)
 - [Library Procedures](#library-procedures)
     + [Luis_start()](#luis-start())
-    + [Luis_on_bt_data_arrival()](#luis-on-bt-data-arrival())
-    + [Luis_on_bt_data_sent()](#luis-on-bt-data-sent())
-    + [Luis_on_bt_event()](#luis-on-bt-event())
-    + [Callback_luis_bt_connected()](#callback-luis-bt-connected())
-    + [Callback_luis_bt_disconnected()](#callback-luis-bt-disconnected())
-    + [Callback_luis_bt_enabled()](#callback-luis-bt-enabled())
-    + [Callback_luis_bt_disabled()](#callback-luis-bt-disabled())
-    + [Callback_luis_buzz_command()](#callback-luis-buzz-command())
+    + [Luis_on_bt_data_arrival()](#luis-on-bt-data-arrival)
+    + [Luis_on_bt_data_sent()](#luis-on-bt-data-sent)
+    + [Luis_on_bt_event()](#luis-on-bt-event)
+    + [Callback_luis_bt_connected()](#callback-luis-bt-connected)
+    + [Callback_luis_bt_disconnected()](#callback-luis-bt-disconnected)
+    + [Callback_luis_bt_enabled()](#callback-luis-bt-enabled)
+    + [Callback_luis_bt_disabled()](#callback-luis-bt-disabled)
+    + [Callback_luis_buzz_command()](#callback-luis-buzz-command)
 
 ## Library Info
 
@@ -49,10 +49,10 @@ The LUIS library utilizes the WA2000 module's Bluetooth capabilities to allow fo
 | Supported platforms:   | Any platform with Bluetooth ([bt.](http://docs.tibbo.com/taiko/object_bt.htm)) interface. |
 | Files to include:      | luis.tbs, luis.tbh, luis.html (from current_library_set\luis\trunk\) |
 | Dependencies:          | [STG](<http://docs.tibbo.com/taiko/lib_stg.htm>) library     |
-| API procedures:        | [luis_start()](#luis_start()) - Boots the WA2000, enables Bluetooth, and sets the advertised name of the device |
-| Event procedures:      | [luis_on_bt_data_arrival()](#luis_on_bt_data_arrival()) - Call this from [on_bt_data_arrival()](<http://docs.tibbo.com/taiko/bt_on_bt_data_arrival.htm>) <br />[luis_on_bt_data_sent()](#luis_on_bt_data_sent()) - Call this from [on_bt_data_sent()](<http://docs.tibbo.com/taiko/bt_on_bt_data_sent.htm>)<br />[luis_on_bt_event()](#luis_on_bt_event()) - Call this from [on_bt_event()](<http://docs.tibbo.com/taiko/bt_on_bt_event.htm>) |
-| Callback procedures:   | [callback_luis_bt_connected()](#callback_luis_bt_connected()) - A host device has connected via Bluetooth.<br />[callback_luis_bt_disconnected()](#callback_luis_bt_disconnected()) - A host device has disconnected.<br />[callback_luis_bt_enabled()](#callback_luis_bt_enabled()) - Bluetooth has been enabled successfully.<br />[callback_luis_bt_disabled()](#callback_luis_bt_disabled()) - Indicates that the Bluetooth has failed. Call [luis_start()](#luis_start()) to restart it.<br />[callback_luis_buzz_command()](#callback_luis_buzz_command()) - Indicates that the buzz ("B") command was received from the host. |
-| Required buffer space: | 2 buffer pages minumum.<br />1 page for Bluetooth RX<br />1 page for Bluetooth TX |
+| API procedures:        | [luis_start()](#luis_start) - Boots the WA2000, enables Bluetooth, and sets the advertised name of the device |
+| Event procedures:      | [luis_on_bt_data_arrival()](#luis_on_bt_data_arrival) - Call this from [on_bt_data_arrival()](<http://docs.tibbo.com/taiko/bt_on_bt_data_arrival.htm>) <br />[luis_on_bt_data_sent()](#luis_on_bt_data_sent) - Call this from [on_bt_data_sent()](<http://docs.tibbo.com/taiko/bt_on_bt_data_sent.htm>)<br />[luis_on_bt_event()](#luis_on_bt_event) - Call this from [on_bt_event()](<http://docs.tibbo.com/taiko/bt_on_bt_event.htm>) |
+| Callback procedures:   | [callback_luis_bt_connected()](#callback_luis_bt_connected) - A host device has connected via Bluetooth.<br />[callback_luis_bt_disconnected()](#callback_luis_bt_disconnected) - A host device has disconnected.<br />[callback_luis_bt_enabled()](#callback_luis_bt_enabled) - Bluetooth has been enabled successfully.<br />[callback_luis_bt_disabled()](#callback_luis_bt_disabled) - Indicates that the Bluetooth has failed. Call [luis_start()](#luis_start) to restart it.<br />[callback_luis_buzz_command()](#callback_luis_buzz_command) - Indicates that the buzz ("B") command was received from the host. |
+| Required buffer space: | 2 buffer pages minimum.<br />1 page for Bluetooth RX<br />1 page for Bluetooth TX |
 
 
 
@@ -75,11 +75,11 @@ The LUIS library utilizes the WA2000 module's Bluetooth capabilities to allow fo
 
 > **Note:** If you want to use the **wln** library, **luis_start()** should be called after**wln_start()**
 
-4. Add [#define LUIS_DEBUG_PRINT 1](#Library-Defines-(Options)) to the defines section of the **global.tbh** file of your project. This way you will "see what's going on". Don't forget to remove this later, after you've made sure that the library operates as expected.
+4. Add [#define LUIS_DEBUG_PRINT 1](#Library-Defines-Options) to the defines section of the **global.tbh** file of your project. This way you will "see what's going on". Don't forget to remove this later, after you've made sure that the library operates as expected.
 
 5. Create a new file with type of "LUIS Library" to your project. 
 
-   Add [#define LUIS_CONFIG_FILE "filename.xtxt"](#Library-Defines-(Options)) to your **global.tbh** file of your project, with the name of the file you have just created.
+   Add [#define LUIS_CONFIG_FILE "filename.xtxt"](#Library-Defines-Options) to your **global.tbh** file of your project, with the name of the file you have just created.
 
 4. Add LUIS event procedures to respective event handlers
 
