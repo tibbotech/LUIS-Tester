@@ -81,7 +81,7 @@ path=luis\trunk\luis.tbs
 type=basic
 format=
 condition=
-locked=no
+locked=yes
 location=commonlib
 [file9]
 path=luis\trunk\luis.html
