@@ -160,7 +160,7 @@ This is an editable text box that accepts 6 byte mac address values in decimal f
 
 ##### Validation
 
-This is a C-like expression returning either an empty string "" for SUCCESS, or an error string (e.g. "Value is out of bounds") in case of an invalid value. The message should inform the user of the valid range of values.
+This is a Javascript expression returning either an empty string "" for SUCCESS, or an error string (e.g. "Value is out of bounds") in case of an invalid value. The message should inform the user of the valid range of values.
 
 Examples:
 
@@ -176,11 +176,29 @@ Validation rules can also be nested
 SC>=0?(SC<=250?"":"SC must be less than 250"):"SC must be greater than 0"
 ```
 
+###### String Length
+
+```C
+STR.length>0&&STR.length<6?"":"STR must be between 1 and 5 characters long"
+```
+
+###### IP Address
+
+```C
+new RegExp("^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$").test(IP)?"":"invalid IP address for value IP"
+```
+
+###### MAC address(Hex)
+
+```C
+new RegExp("((\d|([a-f]|[A-F])){2}:){5}(\d|([a-f]|[A-F])){2}$").test(MAC)?"":"invalid MAC address for value MAC"
+```
+
 
 
 ##### Status
 
-The status property is a C-like expression that determines the state of the current UI control. The expression returns a single character(insensitive) that describes the final state of the control.
+The status property is a Javascript expression that determines the state of the current UI control. The expression returns a single character(insensitive) that describes the final state of the control.
 
 Possible states:
 
@@ -202,7 +220,17 @@ When **WE** is zero, enable this configuration, otherwise show as irrelevant.
 WE!=0?"e":"i"
 ```
 
-Configuration depends on two settings.
+Result of the above configuration:
+
+Disabled Controls
+
+![Disabled Controls](images/sc_we0.jpg)
+
+Enabled Controls
+
+![Enabled Controls](images/sc_we1.jpg)
+
+Configuration that depends on two settings.
 
 Enables the control if **WD** is 0 and **WE** is 1
 
