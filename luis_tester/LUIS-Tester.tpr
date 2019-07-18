@@ -1,7 +1,7 @@
 [project]
 version=1
-platform=TPP2W(G2)
-src_lib_ver=2_01_02
+platform=EM2000W
+src_lib_ver=2_01_03
 name=LUIS-Tester
 output=LUIS-Tester.tpc
 debug=on
